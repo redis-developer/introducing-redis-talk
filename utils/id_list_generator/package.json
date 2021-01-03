@@ -1,0 +1,23 @@
+{
+  "name": "id_list_generator",
+  "version": "1.0.0",
+  "description": "ID List Generator Tool",
+  "main": "id_list_generator.js",
+  "scripts": {
+    "start": "node id_list_generator.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simonprickett/introducing-redis-talk.git"
+  },
+  "author": "Simon Prickett",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/simonprickett/introducing-redis-talk/issues"
+  },
+  "homepage": "https://github.com/simonprickett/introducing-redis-talk#readme",
+  "dependencies": {
+    "clean-shortid": "^1.0.0"
+  }
+}
