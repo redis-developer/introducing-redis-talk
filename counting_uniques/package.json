@@ -1,0 +1,23 @@
+{
+  "name": "counting_uniques",
+  "version": "1.0.0",
+  "description": "Redis Demo Code for Counting Unique Items with Sets and HyperLogLog",
+  "main": "count_uniques.js",
+  "scripts": {
+    "start": "node count_uniques.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simonprickett/introducing-redis-talk.git"
+  },
+  "author": "Simon Prickett",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/simonprickett/introducing-redis-talk/issues"
+  },
+  "homepage": "https://github.com/simonprickett/introducing-redis-talk#readme",
+  "dependencies": {
+    "ioredis": "^4.19.4"
+  }
+}
