@@ -29,4 +29,4 @@ while True:
     print("Added:")
     print(payload)
     print(f"Queue length is {list_length}")
-    time.sleep(random.randint(1, 10))
+    time.sleep(random.randint(1, 5))
