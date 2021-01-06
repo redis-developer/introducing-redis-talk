@@ -1,7 +1,12 @@
 .DS_Store
+.settings
+.classpath
+.project
+.vscode
 *.tmp
 *.bak
 *.swp
 *.log
 node_modules
 venv
+caching/target
