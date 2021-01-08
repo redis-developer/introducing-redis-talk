@@ -1,61 +1,68 @@
 package dev.simonprickett.rediscachedemo;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 import redis.clients.jedis.Jedis;
 
 public class App 
 {
+    private final static int CACHE_SECS = 15;
+
+    private static String getExchangeRates(String date, String base) throws IOException {
+        String apiUrl = "https://api.exchangeratesapi.io/" + date + "?base=" + base;
+
+        InputStream is = new URL(apiUrl).openStream();
+        StringBuilder sb = new StringBuilder();
+        
+        int c;
+        while ((c = is.read()) != -1) {
+            sb.append((char) c);
+        }
+
+        return sb.toString();
+    }
+
     public static void main( String[] args )
     {
-        /*
-         * Result to cache https://api.exchangeratesapi.io/2020-11-10?base=GBP
-         *
-         * Example response:
-         * 
-         * {
-         *   "rates": {
-         *     "CAD": 1.7260015922,
-         *     "HKD": 10.2674276488,
-         *     "ISK": 181.9853559535,
-         *     "PHP": 63.969590617,
-         *     "DKK": 8.3474428983,
-         *     "HUF": 400.7041700773,
-         *     "CZK": 29.636814191,
-         *     "GBP": 1.0,
-         *     "RON": 5.4569817118,
-         *     "SEK": 11.4371573058,
-         *     "IDR": 18602.4690804301,
-         *     "INR": 98.2995638182,
-         *     "BRL": 7.1272551944,
-         *     "RUB": 101.1736541718,
-         *     "HRK": 8.4797551103,
-         *     "JPY": 139.4436159358,
-         *     "THB": 40.1702118117,
-         *     "CHF": 1.2128993194,
-         *     "EUR": 1.1212899319,
-         *     "MYR": 5.4556361638,
-         *     "BGN": 2.1930188489,
-         *     "TRY": 10.9521994102, 
-         *     "CNY": 8.7580592714,
-         *     "NOK": 11.9549689963,
-         *     "NZD": 1.9402800982,
-         *     "ZAR": 20.576455154,
-         *     "USD": 1.3240191516,
-         *     "MXN": 27.0235358757,
-         *     "SGD": 1.7857663456,
-         *     "AUD": 1.8206384625,
-         *     "ILS": 4.4721527645,
-         *     "KRW": 1478.9029299306,
-         *     "PLN": 5.0446834038
-         *   },
-         *   "base": "GBP",
-         *   "date": "2020-11-10"
-         * } 
-         */
-        
-        Jedis jedis = new Jedis();
-        System.out.println( "Hello World!" );
-        String str = jedis.get("hello");
-        System.out.println(str);
-        jedis.close();
+        try {
+            if (args.length != 2) {
+                System.err.println("Usage:   <date> <base>");
+                System.err.println("Example: 2020-11-10 GBP");
+                System.exit(-1);
+            }
+
+            String date = args[0];
+            String base = args[1];
+            String cacheKey = "rates:" + date + ":" + base;
+
+            Instant start = Instant.now();
+
+            Jedis jedis = new Jedis();
+
+            System.out.println("Looking in cache for: " + cacheKey);
+            String rates = jedis.get(cacheKey);
+
+            if (rates == null) {
+                System.out.println("Cache miss, fetching from origin...");
+                rates = getExchangeRates(date, base);
+
+                System.out.println("Caching origin response for " + CACHE_SECS + " seconds at " + cacheKey);
+                jedis.setex(cacheKey, CACHE_SECS, rates);
+            } else {
+                System.out.println("Cache hit!");
+            }
+
+            System.out.println(rates);            
+            jedis.close();
+
+            System.out.println("Time taken: " + ChronoUnit.MILLIS.between(start, Instant.now()) + " milliseconds.");
+        } catch (Exception e) {
+            System.err.println("Error:");
+            System.err.println(e);
+        }
     }
 }
