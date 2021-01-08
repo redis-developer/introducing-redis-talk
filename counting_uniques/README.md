@@ -4,16 +4,18 @@ This demo compares counting unique items using a [Redis Set](https://redis.io/to
 
 The unique items to count are in the file `unique_ids.json`.  This contains 500,000 items.
 
-### Setup
+## Setup
 
-You will need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set.  Once you have Redis installed and running:
+Download and install an LTS version of [Node.js](https://nodejs.org/en/download/) (8.9.4 or newer).
+
+You will also need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set.  Once you have Redis installed and running:
 
 ```bash
 $ npm install
 $ npm start
 ```
 
-### Output
+## Output
 
 The demo logs the number of unique items counted and memory used for each data type.
 
