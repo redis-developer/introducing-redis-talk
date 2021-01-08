@@ -9,10 +9,10 @@ We'll look at concrete use cases written in Python, JavaScript (Node.js) and Jav
 We will walk through:
 
 * An overview of the Redis data model
-* Connecting microservices together with queues
-* Counting unique items
-* Caching data for performance
-* Full text search and secondary indexing
+* Connecting microservices together with queues ([Python code](queuing/))
+* Counting unique items ([Node.js code](counting_uniques))
+* Caching data for performance ([Java code](caching/))
+* Full text search and secondary indexing ([Python code](full_text_search_and_secondary_indexing/))
 
 ## Presenter Bio
 
