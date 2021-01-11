@@ -65,7 +65,7 @@ other_animals | TAG SORTABLE
 
 For the full `FT.CREATE` command used, see [`create_index.redis`](create_index.redis).
 
-Create the index and load the example data (contained in [animal_data.redis](animal_data.redis)) by runnign the `load_data.sh` script:
+Create the index and load the example data (contained in [animal_data.redis](animal_data.redis)) by running the `load_data.sh` script:
 
 ```bash
 $ ./load_data.sh
@@ -81,7 +81,7 @@ OK
 Index created.
 ```
 
-Each `(integer) 10` is the output from the `HSET` command when adding an adoptable animal's Hash.  Ignore any `(error) Unknown Index name` output - this is where we delete any old RediSearch index named `adoptables`, and will occur and be ignored in the case where no such index was found.
+Each `(integer) 10` line is the output from the `HSET` command when adding an adoptable animal's Hash.  Ignore any `(error) Unknown Index name` output - this is where we delete any old RediSearch index named `adoptables`, and will occur and be ignored in the case where no such index was found.
 
 ## Querying the Index with redis-cli
 
@@ -138,11 +138,54 @@ The `FT.SEARCH` command allows for all sorts of full text and faceted searching,
 
 Additionally, if you prefer a more graphical way to look at data in Redis rather than redis-cli, try [RedisInsight](https://redislabs.com/redis-enterprise/redis-insight/).
 
+Other example queries... adoptable animals within 80 miles of a given location (note: Redis uses lon, lat format):
+
+```
+FT.SEARCH adoptables "@location:[-2.2297829,53.0220219 80 mi]
+```
+
+One adoptable male dog aged 10-15 whose description mentions "family" but not "training":
+
+```
+FT.SEARCH adoptables "@species:{dog} @age:[10 15] @sex:{m} @description:(family -training)" limit 0 1
+```
+
 ## Querying the Index with Python
 
-TODO
+As RediSearch adds extra optional commands to Redis, these are not mapped as functions in the redis-py client that we used in other examples in the way that the built in Redis commands are. There are two ways of calling these commands...
 
-TODO mention code change that would be needed for a remote Redis...
+* Using redis-py's `execute_command` function to send an arbitrary commmand string to Redis.
+* Using the [redisearch-py](https://github.com/RediSearch/redisearch-py/) client.
+
+Here, we'll use redisearch-py.
+
+The example code assumes your Redis instance is on `localhost` at port `6379` which is the default. If this isn't the case, or your Redis instance requires a password to connect, you'll need to modify the code to pass in a Redis connection like this:
+
+```python
+# Add this import, retain all existing imports.
+from redis import Redis
+
+# Old: 
+# client = Client("adoptables")
+# New:
+conn = Redis(host = "yourhost", port = 999, password = "ssssh", decode_responses = True)
+client = Client("adoptables", conn = conn)
+```
+
+To run the code:
+
+```bash
+$ python query_index.py
+27 matches.
+
+Logan, cat, 9 years old: Logan is an affectionate boy who is full of fun and loves to play. He would be best as the only pet in the house.
+
+Winston, cat, 3 years old: Winston is a friendly boy who is good with other animals but not children. He is with us due to his owner moving and not being able to take him.
+
+...
+```
+
+This will run whichever of the example functions is called at line 21, and display the results.
 
 ## Managing Data in the Index
 
@@ -163,24 +206,3 @@ r = redis.Redis(host = "your host", port = 9999, password = "sssssh", decode_res
 ```
 
 Make sure to use the correct hostname, port and password to connect to your Redis instance.
-
-# Scratch Pad Section...
-
-Example queries:
-
-ft.search adoptables "@species:{dog} @age:[10 15] @sex:{m} @description:(family -training)" limit 0 1
-
-Example geo query:
-
-ft.search adoptables "@location:[-2.2297829,53.0220219 80 mi]
-
-Search location example:
-
-Stoke on Trent: -2.2297829,53.0220219
-
-Locations:
-
-Nottingham:  -1.0579597,52.9417272
-Sheffield:   -1.4357417,53.3881032 
-Birmingham:  -2.033453,52.4176485
-Leeds:       -1.5442055,53.729469    
