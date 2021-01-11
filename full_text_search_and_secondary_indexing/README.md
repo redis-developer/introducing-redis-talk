@@ -144,7 +144,7 @@ Other example queries... adoptable animals within 80 miles of a given location (
 FT.SEARCH adoptables "@location:[-2.2297829,53.0220219 80 mi]
 ```
 
-One adoptable male dog aged 10-15 whose description mentions "family" but not "training":
+The first adoptable male dog aged 10-15 whose description mentions "family" but not "training":
 
 ```
 FT.SEARCH adoptables "@species:{dog} @age:[10 15] @sex:{m} @description:(family -training)" limit 0 1
