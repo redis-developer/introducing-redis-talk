@@ -28,6 +28,8 @@ Installing collected packages: redis
 Successfully installed redis-3.5.3
 ```
 
+You will also need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set.
+
 ## Output
 
 Run the job producer that adds new jobs to the list:

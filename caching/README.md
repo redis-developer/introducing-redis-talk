@@ -8,6 +8,8 @@ When the code is run, it will first look in Redis to see if there is a cached re
 
 You will need to have a [Java 8 or higher JDK](https://openjdk.java.net/) installed, as well as [Apache Maven](https://maven.apache.org/) to build the project.
 
+You will also need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set.
+
 You can then build the project as follows:
 
 ```bash
