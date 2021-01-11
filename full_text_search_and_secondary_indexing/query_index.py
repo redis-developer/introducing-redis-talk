@@ -1,4 +1,4 @@
-from redisearch import Client, Query
+from redisearch import Client
 
 client = Client("adoptables")
 
