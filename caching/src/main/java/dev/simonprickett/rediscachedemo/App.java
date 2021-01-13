@@ -32,6 +32,7 @@ public class App
             if (args.length != 2) {
                 System.err.println("Usage:   <date> <base>");
                 System.err.println("Example: 2020-11-10 GBP");
+                System.err.println("Example: latest GBP");
                 System.exit(-1);
             }
 
