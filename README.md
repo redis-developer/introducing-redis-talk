@@ -9,6 +9,7 @@ We'll look at concrete use cases written in Python, JavaScript (Node.js) and Jav
 We will walk through:
 
 * An overview of the Redis data model
+* Basic String demo ([Python code](basics/))
 * Connecting microservices together with queues ([Python code](queuing/))
 * Counting unique items ([Node.js code](counting_uniques))
 * Caching data for performance ([Java code](caching/))
