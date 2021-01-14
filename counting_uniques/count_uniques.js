@@ -20,10 +20,10 @@ const countUniques = async () => {
       break;
     }
     
-    await Promise.all([
-      redis.pfadd(HLL_KEY_NAME, ...tmpArray),
-      redis.sadd(SET_KEY_NAME, ...tmpArray) 
-    ]);
+    const pipeline = redis.pipeline();
+    pipeline.pfadd(HLL_KEY_NAME, ...tmpArray);
+    pipeline.sadd(SET_KEY_NAME, ...tmpArray); 
+    await pipeline.exec();
 
     startIndex += BATCH_SIZE;
     endIndex += BATCH_SIZE;
