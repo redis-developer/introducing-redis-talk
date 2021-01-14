@@ -26,4 +26,4 @@ while True:
         # ('jobs', '{"room": 343, "job": "Room Service"}')
         job = json.loads(next_job[1])
         print(f"Performing job {job['job']} for room {str(job['room'])}. Backlog {backlog} jobs.")
-        time.sleep(random.randint(3, 10))
+        time.sleep(random.randint(2, 6))
