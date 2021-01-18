@@ -15,6 +15,8 @@ We will walk through:
 * Caching data for performance ([Java code](caching/))
 * Full text search and secondary indexing ([Python code](full_text_search_and_secondary_indexing/))
 
+Watch a video of the presentation [here](https://cfe.dev/events/introduction-to-redis/) (free cfe.dev account required).
+
 ## Presenter Bio
 
 [Simon Prickett](https://simonprickett.dev/) is a Senior Curriculum Engineer at [Redis Labs](https://redislabs.com), responsible for Redis University's [online training courses](https://university.redislabs.com/#courses).  Previously, he's worked as a software architect in the power, food, logistics, entertainment and law enforcement industries.  Simon loves helping people learn about tech.  He also enjoys creating gadgets that mix hardware with software, and regularly blogs and publishes videos about his latest Raspberry Pi, Arduino and Alexa projects.  Simon is partial to Aeropress coffee and never misses an opportunity to say hi to new dogs.
