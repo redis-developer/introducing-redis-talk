@@ -11,7 +11,7 @@ In this demo, we're operating an animal rescue organization that rehomes dogs an
 You will need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set. This demo requires the RediSearch module, so you'll also need to [install that](https://oss.redislabs.com/redisearch/). If you want to try this out without installing and configuring Redis, use either of the following options:
 
 * The RediSearch Docker image.
-* Redis Labs offers a free 30Mb Redis Enterprise instance with RediSearch installed in the cloud .
+* Redis Labs offers a free 30Mb Redis Enterprise instance with RediSearch installed in the cloud.
 
 Check out the [RediSearch Quick Start](https://oss.redislabs.com/redisearch/Quick_Start/) for more information on the above options.
 
