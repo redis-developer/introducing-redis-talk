@@ -11,9 +11,10 @@ import redis.clients.jedis.Jedis;
 public class App 
 {
     private final static int CACHE_SECS = 15;
+    private final static String ACCESS_KEY = System.getenv("ACCESS_KEY");
 
-    private static String getExchangeRates(String date, String base) throws IOException {
-        String apiUrl = "https://api.exchangeratesapi.io/" + date + "?base=" + base;
+    private static String getExchangeRates(String date) throws IOException {
+        String apiUrl = "http://api.exchangeratesapi.io/" + date + "?access_key=" + ACCESS_KEY;
 
         InputStream is = new URL(apiUrl).openStream();
         StringBuilder sb = new StringBuilder();
@@ -29,16 +30,15 @@ public class App
     public static void main( String[] args )
     {
         try {
-            if (args.length != 2) {
-                System.err.println("Usage:   <date> <base>");
-                System.err.println("Example: 2020-11-10 GBP");
-                System.err.println("Example: latest GBP");
+            if (args.length != 1) {
+                System.err.println("Usage:   <date>");
+                System.err.println("Example: 2020-11-10");
+                System.err.println("Example: latest");
                 System.exit(-1);
             }
 
             String date = args[0];
-            String base = args[1];
-            String cacheKey = "rates:" + date + ":" + base;
+            String cacheKey = "rates:" + date;
 
             Instant start = Instant.now();
 
@@ -49,7 +49,7 @@ public class App
 
             if (rates == null) {
                 System.out.println("Cache miss, fetching from origin...");
-                rates = getExchangeRates(date, base);
+                rates = getExchangeRates(date);
 
                 System.out.println("Caching origin response for " + CACHE_SECS + " seconds at " + cacheKey);
                 jedis.setex(cacheKey, CACHE_SECS, rates);
