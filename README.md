@@ -20,3 +20,21 @@ Watch a video of the presentation [here](https://cfe.dev/events/introduction-to-
 ## Presenter Bio
 
 [Simon Prickett](https://simonprickett.dev/) is the Developer Advocacy Manager at [Redis](https://redis.com), responsible for Redis University's [online training courses](https://university.redis.com/#courses) and creation of other video and written content.  Previously, he's worked as a software architect in the power, food, logistics, entertainment and law enforcement industries.  Simon loves helping people learn about tech.  He also enjoys creating gadgets that mix hardware with software, and regularly blogs and publishes videos about his latest Raspberry Pi, Arduino and Alexa projects.  Simon is partial to Aeropress coffee and never misses an opportunity to say hi to new dogs.
+
+## Starting Redis
+
+This repo includes a docker-compose.yaml file that gets you an instance of Redis 6 with the RediSearch module installed.
+
+To use it:
+
+```bash
+$ docker-compose up -d
+```
+
+Then connect to Redis on `localhost` port `6379`, for example using [RedisInsight](https://redis.com/redis-enterprise/redis-insight/).
+
+When you're finished using Redis:
+
+```bash
+$ docker-compose down
+```
