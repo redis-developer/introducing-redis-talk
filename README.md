@@ -15,7 +15,10 @@ We will walk through:
 * Caching data for performance ([Java code](caching/))
 * Full text search and secondary indexing ([Python code](full_text_search_and_secondary_indexing/))
 
-Watch a video of the presentation [here](https://cfe.dev/events/introduction-to-redis/) (free cfe.dev account required).
+Watch a video of the presentation:
+
+* As delivered to the Virtual Coffee community [here](https://youtu.be/lCYY2cRy7N8?t=140) (YouTube).
+* As delivered to the CFE.dev community [here](https://cfe.dev/events/introduction-to-redis/) (free cfe.dev account required).
 
 ## Presenter Bio
 
