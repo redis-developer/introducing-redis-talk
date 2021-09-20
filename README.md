@@ -14,11 +14,12 @@ We will walk through:
 * Counting unique items ([Node.js code](counting_uniques))
 * Caching data for performance ([Java code](caching/))
 * Full text search and secondary indexing ([Python code](full_text_search_and_secondary_indexing/))
+* Redis Streams ([Node.js code](sreams))
 
 Watch a video of the presentation:
 
-* As delivered to the Virtual Coffee community [here](https://youtu.be/lCYY2cRy7N8?t=140) (YouTube).
-* As delivered to the CFE.dev community [here](https://cfe.dev/events/introduction-to-redis/) (free cfe.dev account required).
+* As delivered to the Virtual Coffee community [here](https://youtu.be/lCYY2cRy7N8?t=140) (YouTube) - does not feature the Streams section.
+* As delivered to the CFE.dev community [here](https://cfe.dev/events/introduction-to-redis/) (free cfe.dev account required) - does not feature the Streams section.
 
 ## Presenter Bio
 
