@@ -7,5 +7,6 @@ const client = new Redis({
 });
 
 module.exports = {
-    client
+    client,
+    STREAM_KEY_NAME: 'ingest:temphumidity'
 };
