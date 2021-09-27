@@ -28,7 +28,7 @@ Installing collected packages: redis
 Successfully installed redis-3.5.3
 ```
 
-You will also need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set.
+You will also need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set.  If you have Docker, see the instructions in the main [README](../) - I've provided a Docker Compose file that will start a container with Redis for you.
 
 ## Output
 
@@ -74,7 +74,7 @@ Nothing to do right now.
 
 If you notice that a backlog of jobs is building up, you can start another instance of the consumer script to help out :). Don't forget that you'll need to activate the Python virtual environment for each new terminal session you use.
 
-If you want to monitor the queue using redis-cli or [RedisInsight](https://redislabs.com/redis-enterprise/redis-insight/), look at the key `jobs`.  Example using redis-cli:
+If you want to monitor the queue using redis-cli or [RedisInsight](https://redis.com/redis-enterprise/redis-insight/), look at the key `jobs`.  Example using redis-cli:
 
 ```bash
 $ redis-cli
