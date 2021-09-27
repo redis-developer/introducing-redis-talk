@@ -4,6 +4,9 @@
   "description": "Redis Streams Demo",
   "main": "index.js",
   "scripts": {
+    "producer": "node producer.js",
+    "consumer": "node consumer.js",
+    "consumergroup": "node consumer_group.js --",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
