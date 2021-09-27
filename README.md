@@ -27,7 +27,7 @@ Watch a video of the presentation:
 
 ## Starting Redis
 
-This repo includes a docker-compose.yaml file that gets you an instance of Redis 6 with the RediSearch module installed.
+This repo includes a `docker-compose.yml` file that gets you an instance of Redis 6 with the RediSearch module installed.
 
 To use it:
 
