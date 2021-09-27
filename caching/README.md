@@ -14,7 +14,7 @@ When the code is run, it will first look in Redis to see if there is a cached re
 
 You will need to have a [Java 8 or higher JDK](https://openjdk.java.net/) installed, as well as [Apache Maven](https://maven.apache.org/) to build the project.
 
-You will also need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set.
+You will also need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set.  If you have Docker, see the instructions in the main [README](../README.md) - I've provided a Docker Compose file that will start a container with Redis for you.
 
 You can then build the project as follows:
 
@@ -63,7 +63,7 @@ Caching origin response for 15 seconds at rates:latest
 Time taken: 329 milliseconds.
 ```
 
-You can also use `redis-cli` or [RedisInsight](https://redislabs.com/redis-enterprise/redis-insight/) to see the value stored in Redis.  Here's an example for when there is data in the cache:
+You can also use `redis-cli` or [RedisInsight](https://redis.com/redis-enterprise/redis-insight/) to see the value stored in Redis.  Here's an example for when there is data in the cache:
 
 ```bash
 $ redis-cli get rates:latest

@@ -16,7 +16,7 @@ Installing collected packages: redis
 Successfully installed redis-3.5.3
 ```
 
-You will also need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set.
+You will also need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set.  If you have Docker, see the instructions in the main [README](../README.md) - I've provided a Docker Compose file that will start a container with Redis for you.
 
 ## Output
 

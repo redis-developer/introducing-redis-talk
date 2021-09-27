@@ -1,19 +1,20 @@
 # Full Text Search and Secondary Indexing
 
-This demo shows how to use the [RediSearch module](https://oss.redislabs.com/redisearch/) to do full text search and secondary indexing over data stored in a number of Redis Hashes.  A Redis Hash is an object-like data structure, it's a set of field name / value pairs stored at a single key in Redis.
+This demo shows how to use the [RediSearch module](https://oss.redis.com/redisearch/) to do full text search and secondary indexing over data stored in a number of Redis Hashes.  A Redis Hash is an object-like data structure, it's a set of field name / value pairs stored at a single key in Redis.
 
-Read more about Hashes [here](https://redislabs.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/1-2-4-hashes-in-redis/), or watch a fun video [here](https://www.youtube.com/watch?v=-agsJUihrWw).
+Read more about Hashes [here](https://redis.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/1-2-4-hashes-in-redis/), or watch a fun video [here](https://www.youtube.com/watch?v=-agsJUihrWw).
 
 In this demo, we're operating an animal rescue organization that rehomes dogs and cats. Each animal that we're taking care of is described by a Redis Hash. We want to allow prospective adopters to search for animals that meet their adoption criteria. For example, someone may want to see all male dogs within 40 miles of their location that are between 4 and 7 years old and good with children. To achieve this, we'll use a RediSearch index.
 
 ## Setup
 
-You will need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set. This demo requires the RediSearch module, so you'll also need to [install that](https://oss.redislabs.com/redisearch/). If you want to try this out without installing and configuring Redis, use either of the following options:
+You will need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set. This demo requires the RediSearch module, so you'll also need to [install that](https://oss.redis.com/redisearch/). If you want to try this out without installing and configuring Redis, use any of the following options:
 
-* The RediSearch Docker image.
-* Redis Labs offers a free 30Mb Redis Enterprise instance with RediSearch installed in the cloud.
+* The Docker Compose file provided in this repo (see the [main README](../README.md))
+* The [RediSearch container]() on Docker Hub.
+* Redis offers a [free 30Mb Redis Enterprise instance](https://redis.com/try-free/) with RediSearch installed in the cloud.
 
-Check out the [RediSearch Quick Start](https://oss.redislabs.com/redisearch/Quick_Start/) for more information on the above options.
+Check out the [RediSearch Quick Start](https://oss.redis.com/redisearch/Quick_Start/) for more information on the above options.
 
 Once you have Redis and RediSearch set up, you'll need to create a Python virtual environment and install the dependencies:
 
@@ -134,9 +135,9 @@ You can query the adoptable animals index from redis-cli.  Once connected to you
    20) "-2.033453,52.4176485"
 ```
 
-The `FT.SEARCH` command allows for all sorts of full text and faceted searching, ordering, filtering and aggregation. [Check out the documentation](https://oss.redislabs.com/redisearch/Commands/#ftsearch) to see everything it's capable of.
+The `FT.SEARCH` command allows for all sorts of full text and faceted searching, ordering, filtering and aggregation. [Check out the documentation](https://oss.redis.com/redisearch/Commands/#ftsearch) to see everything it's capable of.
 
-Additionally, if you prefer a more graphical way to look at data in Redis rather than redis-cli, try [RedisInsight](https://redislabs.com/redis-enterprise/redis-insight/).
+Additionally, if you prefer a more graphical way to look at data in Redis rather than redis-cli, try [RedisInsight](https://redis.com/redis-enterprise/redis-insight/).
 
 Other example queries... adoptable animals within 80 miles of a given location (note: Redis uses lon, lat format):
 
