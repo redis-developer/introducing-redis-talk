@@ -14,7 +14,7 @@ We will walk through:
 * Counting unique items ([Node.js code](counting_uniques))
 * Caching data for performance ([Java code](caching/))
 * Full text search and secondary indexing ([Python code](full_text_search_and_secondary_indexing/))
-* Redis Streams ([Node.js code](sreams))
+* Redis Streams ([Node.js code](streams/))
 
 Watch a video of the presentation:
 
