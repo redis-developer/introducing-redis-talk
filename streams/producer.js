@@ -1,5 +1,5 @@
-const redis = require('./redis');
-const utils = require('./utils');
+import { client, STREAM_KEY_NAME } from './redis.js';
+import { randomInRange, sleep} from './utils.js';
 
 const MIN_LOCATION_ID = 1;
 const MAX_LOCATION_ID = 100;
@@ -14,13 +14,24 @@ const streamProducer = async () => {
   console.log('Starting producer...');
 
   while (true) {
-    const locationId = utils.randomInRange(MIN_LOCATION_ID, MAX_LOCATION_ID, true);
-    const temperature = utils.randomInRange(MIN_TEMP_F, MAX_TEMP_F);
-    const humidity = utils.randomInRange(MIN_HUMIDITY, MAX_HUMIDITY);
+    const locationId = randomInRange(MIN_LOCATION_ID, MAX_LOCATION_ID, true);
+    const temperature = randomInRange(MIN_TEMP_F, MAX_TEMP_F);
+    const humidity = randomInRange(MIN_HUMIDITY, MAX_HUMIDITY);
+
     console.log(`Adding reading for location: ${locationId}, temperature: ${temperature}, humidity: ${humidity}`);
-    const entryId = await redis.client.xadd(redis.STREAM_KEY_NAME, '*', 'location', locationId, 'temp', temperature, 'humidity', humidity);
+    
+    const entryId = await client.xAdd(
+      STREAM_KEY_NAME, 
+      '*', // Let Redis set the entry ID
+      {
+        'location': locationId, 
+        'temp': temperature, 
+        'humidity': humidity
+      }
+    );
+
     console.log(`Added as ${entryId}`);
-    await utils.sleep(utils.randomInRange(MIN_GAP, MAX_GAP, true));
+    await sleep(randomInRange(MIN_GAP, MAX_GAP, true));
   }
 };
 

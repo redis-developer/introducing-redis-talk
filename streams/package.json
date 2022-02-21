@@ -19,11 +19,12 @@
   ],
   "author": "Simon Prickett",
   "license": "MIT",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/simonprickett/introducing-redis-talk/issues"
   },
   "homepage": "https://github.com/simonprickett/introducing-redis-talk#readme",
   "dependencies": {
-    "ioredis": "^4.27.9"
+    "redis": "^4.0.3"
   }
 }

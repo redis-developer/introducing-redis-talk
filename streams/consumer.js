@@ -1,5 +1,6 @@
-const redis = require('./redis');
-const utils = require('./utils');
+import { client, STREAM_KEY_NAME } from './redis.js';
+import { randomInRange, sleep} from './utils.js';
+import { commandOptions } from 'redis';
 
 const LAST_ID_KEY = 'consumer:lastid';
 const BLOCK_TIME = 5000;
@@ -10,7 +11,7 @@ const streamConsumer = async () => {
   console.log('Starting consumer...');
 
   // Did we store a previous last ID?
-  let lastId = await redis.client.get(LAST_ID_KEY);
+  let lastId = await client.get(LAST_ID_KEY);
 
   if (! lastId) {
     // No stored last ID, so start from the beginning...
@@ -22,24 +23,36 @@ const streamConsumer = async () => {
 
   while (true) {
     console.log('Reading stream...');
-    const response = await redis.client.xread('BLOCK', BLOCK_TIME, 'STREAMS', redis.STREAM_KEY_NAME, lastId);
+    const response = await client.xRead(
+      commandOptions(
+        {
+          isolated: true
+        }
+      ), [
+        {
+          key: STREAM_KEY_NAME,
+          id: lastId
+        }
+      ], {
+        COUNT: 1,
+        BLOCK: BLOCK_TIME
+      }
+    );
 
     if (response) {
-      // Unpack some things from the array of arrays response.
-      const entry = response[0][1][0];
-      const entryId = entry[0];
-      const entryPayload = entry[1];
+      // Unpack response...
+      const entry = response[0].messages[0];
       
-      console.log(`Received entry ${entryId}:`);
-      console.log(entryPayload);
+      console.log(`Received entry ${entry.id}:`);
+      console.log(entry.message);
 
       // Simulate some work
-      await utils.sleep(utils.randomInRange(MIN_WORK_DURATION, MAX_WORK_DURATION, true));
-      console.log(`Finished working with entry ${entryId}`);
+      await sleep(randomInRange(MIN_WORK_DURATION, MAX_WORK_DURATION, true));
+      console.log(`Finished working with entry ${entry.id}`);
 
       // Update the last ID we have seen.
-      lastId = entryId;
-      await redis.client.set(LAST_ID_KEY, lastId);
+      lastId = entry.id;
+      await client.set(LAST_ID_KEY, lastId);
     } else {
       console.log(`No new entries since entry ${lastId}.`);
     }
