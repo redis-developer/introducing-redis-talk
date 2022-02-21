@@ -1,5 +1,6 @@
-const redis = require('./redis');
-const utils = require('./utils');
+import { client, STREAM_KEY_NAME } from './redis.js';
+import { randomInRange, sleep} from './utils.js';
+import { commandOptions } from 'redis';
 
 const CONSUMER_GROUP_NAME = "temphumidity_consumers";
 const BLOCK_TIME = 5000;
@@ -19,32 +20,46 @@ const streamConsumerInGroup = async () => {
   let consumerGroupStatus = 'created';
 
   try {
-    await redis.client.xgroup('CREATE', redis.STREAM_KEY_NAME, CONSUMER_GROUP_NAME, 0);
+    await client.xGroupCreate(STREAM_KEY_NAME, CONSUMER_GROUP_NAME, 0);
   } catch (err) {
     consumerGroupStatus = 'exists, not created';  
   }
 
   console.log(`Consumer group ${CONSUMER_GROUP_NAME} ${consumerGroupStatus}.`);
-
+  
   while (true) {
     console.log('Reading stream...');
-    const response = await redis.client.xreadgroup('GROUP', CONSUMER_GROUP_NAME, consumerName, 'COUNT', 1, 'BLOCK', BLOCK_TIME, 'STREAMS', redis.STREAM_KEY_NAME, '>');
+    const response = await client.xReadGroup(
+      commandOptions(
+        {
+          isolated: true
+        }
+      ),
+      CONSUMER_GROUP_NAME, 
+      consumerName, [
+        {
+          key: STREAM_KEY_NAME,
+          id: '>'
+        }
+      ], {
+        COUNT: 1,
+        BLOCK: BLOCK_TIME
+      }
+    );
     
     if (response) {
-      // Unpack some things from the array of arrays response.
-      const entry = response[0][1][0];
-      const entryId = entry[0];
-      const entryPayload = entry[1];
+      // Unpack some things from the response...
+      const entry = response[0].messages[0];
       
-      console.log(`Received entry ${entryId}:`);
-      console.log(entryPayload);
+      console.log(`Received entry ${entry.id}:`);
+      console.log(entry.message);
 
       // Simulate some work
-      await utils.sleep(utils.randomInRange(MIN_WORK_DURATION, MAX_WORK_DURATION, true));
+      await sleep(randomInRange(MIN_WORK_DURATION, MAX_WORK_DURATION, true));
 
       // Positively acknowledge this message has been processed.
-      await redis.client.xack(redis.STREAM_KEY_NAME, CONSUMER_GROUP_NAME, entryId);
-      console.log(`Acknowledged processing of entry ${entryId}.`);
+      await client.xAck(STREAM_KEY_NAME, CONSUMER_GROUP_NAME, entry.id);
+      console.log(`Acknowledged processing of entry ${entry.id}.`);
     } else {
       console.log('No new entries yet.');
     }
