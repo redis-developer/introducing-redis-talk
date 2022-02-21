@@ -6,9 +6,16 @@ The unique items to count are in the file `unique_ids.json`.  This contains 500,
 
 ## Setup
 
-Download and install an LTS version of [Node.js](https://nodejs.org/en/download/) (8.9.4 or newer).
+Download and install an LTS version of [Node.js](https://nodejs.org/en/download/) (Tested with version 14.16.0).
 
 You will also need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set.  If you have Docker, see the instructions in the main [README](../README.md) - I've provided a Docker Compose file that will start a container with Redis for you.
+
+If you're running Redis elsewhere, you'll need to set environment variables as follows for the host, port and optionally password that Redis is running on:
+
+```bash
+$ export REDIS_HOST=<your Redis hostname>
+$ export REDIS_PORT=<your Redis port name>
+$ export REDIS_PASSWORD=<your Redis password as needed>
 
 Once you have Redis installed and running:
 
