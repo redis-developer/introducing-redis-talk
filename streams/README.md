@@ -10,7 +10,7 @@ To watch entries get added to the stream in real time, use the Stream view in Re
 
 ## Setup
 
-Download and install an LTS version of [Node.js](https://nodejs.org/en/download/) (8.9.4 or newer).
+Download and install an LTS version of [Node.js](https://nodejs.org/en/download/) (Tested with v14.16.0).
 
 You will also need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set.  If you have Docker, see the instructions in the main [README](../README.md) - I've provided a Docker Compose file that will start a container with Redis for you.
 
