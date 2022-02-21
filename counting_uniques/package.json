@@ -11,6 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/simonprickett/introducing-redis-talk.git"
   },
+  "type": "module",
   "author": "Simon Prickett",
   "license": "MIT",
   "bugs": {
@@ -18,6 +19,6 @@
   },
   "homepage": "https://github.com/simonprickett/introducing-redis-talk#readme",
   "dependencies": {
-    "ioredis": "^4.19.4"
+    "redis": "^4.0.3"
   }
 }

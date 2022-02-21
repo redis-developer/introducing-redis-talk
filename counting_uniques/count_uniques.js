@@ -1,8 +1,21 @@
-const Redis = require('ioredis');
-const redis = new Redis();
-const uniqueIds = require('./unique_ids.json');
+import { createClient  } from 'redis';
+import { readFile } from 'fs/promises';
 
 const countUniques = async () => {
+  const uniqueIds = JSON.parse(
+    await readFile(new URL('./unique_ids.json', import.meta.url))
+  );
+
+  const client = createClient({
+    socket: {
+      host: process.env.REDIS_HOST || 'localhost',
+      port: process.env.REDIS_PORT || 6379
+    },
+    password: process.env.REDIS_PASSWORD
+  });
+
+  await client.connect();
+
   const HLL_KEY_NAME = "hlldemo";
   const SET_KEY_NAME = "setdemo";
 
@@ -11,7 +24,7 @@ const countUniques = async () => {
   let endIndex = BATCH_SIZE;
   let tmpArray = [];
 
-  await redis.del(HLL_KEY_NAME, SET_KEY_NAME);
+  await client.del(HLL_KEY_NAME, SET_KEY_NAME);
 
   do {
     tmpArray = uniqueIds.slice(startIndex, endIndex);
@@ -20,26 +33,26 @@ const countUniques = async () => {
       break;
     }
     
-    const pipeline = redis.pipeline();
-    pipeline.pfadd(HLL_KEY_NAME, ...tmpArray);
-    pipeline.sadd(SET_KEY_NAME, ...tmpArray); 
-    await pipeline.exec();
+    await Promise.all([
+      client.pfAdd(HLL_KEY_NAME, ...tmpArray),
+      client.sAdd(SET_KEY_NAME, ...tmpArray)
+    ]);
 
     startIndex += BATCH_SIZE;
     endIndex += BATCH_SIZE;
   } while (tmpArray.length === BATCH_SIZE);
 
   const [ hllCount, hllMemoryUsed, setCount, setMemoryUsed ] = await Promise.all([
-    redis.pfcount(HLL_KEY_NAME),
-    redis.call('MEMORY', 'USAGE', HLL_KEY_NAME),
-    redis.scard(SET_KEY_NAME),
-    redis.call('MEMORY', 'USAGE', SET_KEY_NAME)
+    client.pfCount(HLL_KEY_NAME),
+    client.memoryUsage(HLL_KEY_NAME),
+    client.sCard(SET_KEY_NAME),
+    client.memoryUsage(SET_KEY_NAME),
   ]);
 
   console.log(`HyperLogLog method: counted ${hllCount} unique items, memory used ${hllMemoryUsed} bytes.`);
   console.log(`Set method: counted ${setCount} unique items, memory used ${setMemoryUsed} bytes.`);
 
-  redis.quit();
+  await client.quit();
 };
 
 countUniques();
