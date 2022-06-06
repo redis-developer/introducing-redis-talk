@@ -27,7 +27,7 @@ Watch a video of the presentation:
 
 ## Starting Redis
 
-This repo includes a `docker-compose.yml` file that gets you an instance of Redis 6 with the RediSearch module installed.
+This repo includes a `docker-compose.yml` file that gets you an instance of Redis Stack - a distribution of Redis with commonly used modules including RediSearch pre-installed.
 
 To use it:
 
@@ -35,7 +35,7 @@ To use it:
 $ docker-compose up -d
 ```
 
-Then connect to Redis on `localhost` port `6379`, for example using [RedisInsight](https://redis.com/redis-enterprise/redis-insight/).
+Then connect to Redis on `localhost` port `6379`, for example using [RedisInsight](https://redis.com/redis-enterprise/redis-insight/).  You can also use RedisInsight directly by pointing your browser at `http://localhost:8001`.
 
 When you're finished using Redis:
 
