@@ -1,11 +1,15 @@
 import json
+import os
 import random
 import redis
 import time
+from dotenv import load_dotenv
 
 LIST_KEY = "jobs"
 
-r = redis.Redis(decode_responses = True)
+load_dotenv()
+
+r = redis.Redis.from_url(os.getenv("REDIS_URL"), decode_responses = True)
 
 while True:
     print("Checking for jobs...")

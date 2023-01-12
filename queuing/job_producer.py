@@ -1,7 +1,9 @@
 import json
+import os
 import random
 import redis
 import time
+from dotenv import load_dotenv
 
 LIST_KEY = "jobs"
 
@@ -13,7 +15,9 @@ JOBS = [
     "Extra Pillows"
 ]
 
-r = redis.Redis(decode_responses = True)
+load_dotenv()
+
+r = redis.Redis.from_url(os.getenv("REDIS_URL"), decode_responses = True)
 
 r.delete(LIST_KEY)
 
