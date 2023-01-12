@@ -30,6 +30,12 @@ Successfully installed redis-3.5.3
 
 You will also need to [install Redis](https://redis.io/download) and have it running locally on the default port 6379 with no password set.  If you have Docker, see the instructions in the main [README](../README.md) - I've provided a Docker Compose file that will start a container with Redis for you.
 
+If your Redis instance is not running on localhost port 6379 with no password, you'll need to set the `REDIS_URL` environment variable.  For example:
+
+```
+export REDIS_URL=redis://username:password@hostname:port
+```
+
 ## Output
 
 Run the job producer that adds new jobs to the list:

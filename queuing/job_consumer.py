@@ -9,7 +9,7 @@ LIST_KEY = "jobs"
 
 load_dotenv()
 
-r = redis.Redis.from_url(os.getenv("REDIS_URL"), decode_responses = True)
+r = redis.Redis.from_url(os.getenv("REDIS_URL", "redis://localhost:6379"), decode_responses = True)
 
 while True:
     print("Checking for jobs...")
